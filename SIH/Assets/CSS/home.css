@@ -181,6 +181,8 @@ input[type="text"] {
     border: 1px solid #ccc;  
     position: relative; /* Added for positioning buttons and dots */ 
     box-sizing: border-box;  
+    padding: 2px 0 0 0 ;
+    border-radius: 5px;
 }  
 
 .slides {  
