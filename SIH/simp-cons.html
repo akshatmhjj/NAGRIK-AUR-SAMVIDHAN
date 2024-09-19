@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Simplified Constitution</title>
+        <link rel="stylesheet" href="Assets/CSS/simp-cons.css">
+        <link rel="icon" type="image/png" sizes="32x32" href="Assets/Images/Favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="Assets/Images/Favicons/favicon-16x16.png">
+        <link rel="manifest" href="Assets/Images/Favicons/site.webmanifest">
+        <meta name="theme-color" content="#ffffff">
+        <script src="https://kit.fontawesome.com/ae284f5a17.js" crossorigin="anonymous"></script>
+    </head>
+<body>
+    
+    <header>
+        <div class = "header1">
+            <div class = "left">
+                <div class = "logo">
+                    <img src="Assets/Images/Cropped Emblem.png">
+                </div>
+                <div class = "title">
+                    <pre style = "font-size: 23px; font-weight: 600;">नागरिक  और  संविधान</pre><br>
+                    <pre style="font-size: 28px; font-weight: 600;">NAGRIK  AUR  SAMVIDHAN</pre>
+                </div>
+            </div>
+            
+            <div class = "right" >
+
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search..." onkeyup="showSuggestions(this.value)" autocomplete="off">
+                    <div id="suggestions-box"></div>
+                    <div class="icon" onclick="redirectToSection()">
+                      <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <div class = "button-container">
+                    <button id = "openModalBtn">SIGN UP / LOG IN</button>
+                </div>
+            
+                <!-- The Modal -->
+                <div id="authModal" class="modal">
+
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+
+                        <!-- Navigation inside the modal -->
+                        <h2>Select an Action</h2>
+                        <button onclick="showForm('signupForm')">Sign Up</button>
+                        <button onclick="showForm('loginForm')">Log In</button>
+
+                        <!-- Sign-Up Form -->
+                        <div id="signupForm" class="form-container">
+                            <h2>Sign Up</h2>
+                            <form id="signup">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" required>
+                                
+                                <label for="phone">Phone No:</label>
+                                <input type="tel" id="phone" required>
+                                
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" required>
+                                
+                                <button type="submit">Sign Up</button>
+                            </form>
+                            <p class="success-message" id="signupSuccessMessage"></p>
+                        </div>
+
+                        <!-- Log-In Form -->
+                        <div id="loginForm" class="form-container">
+                            <h2>Log In</h2>
+                            <form id="login">
+                                <label for="loginPhone">Phone No:</label>
+                                <input type="tel" id="loginPhone" required>
+                                
+                                <label for="loginPassword">Password:</label>
+                                <input type="password" id="loginPassword" required>
+                                
+                                <button type="submit">Log In</button>
+                            </form>
+                            <p class="error-message" id="loginErrorMessage"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class = "translate"><img src="Assets/Images/translate.svg" alt=""></button>
+
+                <button class = "account" id="openSidebarBtn"><img src="Assets/Images/person (1).svg" alt=""></button>
+
+                <!-- Account Sidebar -->
+                <div id="accountSidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="close-sidebar" onclick="closeSidebar()">&times;</a>
+                    <div class="sidebar-content">
+                        <h2>Your Account</h2>
+                        <p><strong>Name:</strong> <span id="accountName"></span></p>
+                        <p><strong>Phone No:</strong> <span id="accountPhone"></span></p>
+                        <button id="logoutBtn">Log Out</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class = "navbar">
+            
+            <div class="bar"><a href="home.html">Home</a></div>
+
+            <div class="dropdown">
+                <button class="selected"><a href="our-constitution.html">Our Constitution</a> <img src="Assets/Images/caret-down-fill.svg" ></button>
+                <div class="dropdown-content">
+                    <a href="our-constitution.html#Constitution">What is Constitution</a>
+                    <!-- <a href="#">History</a>
+                    <a href="#">About our Constitution</a> -->
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="selected"><a href="simp-cons.html#book-holder">Simplified Constitution</a> <img src="Assets/Images/caret-down-fill.svg" ></button>
+                <div class="dropdown-content">
+                    <a href="cons-str.html">Constitution structure </a>
+                    <a href="simp-cons.html#Introduction1">List of Part, Articles and Schedules</a>
+                    <!-- <a href="#">Preamble</a>
+                    <a href="#">Fundamental Rights</a>
+                    <a href="#">Duties & Directive Principles</a>
+                    <a href="#">Governance Structure</a> -->
+                    <!-- <a href="#">Important Amendments</a> -->
+                </div>
+            </div>
+        
+            <div class="bar"><a href="games.html">Games</a></div>
+
+            <div class="bar"><a href="kyc.html#india-map">Know Your Country</a></div>
+
+            <div class="dropdown">
+                <button class="selected"><a href="about-us.html">About Us</a> <img src="Assets/Images/caret-down-fill.svg" ></button>
+                <div class="dropdown-content">
+                    <a href="about-us.html#Introduction">Introduction</a>
+                    <!-- <a href="#">Mission and Objectives</a>
+                    <a href="#">About The Department</a> -->
+                </div>
+            </div>
+        </div>
+
+    </header>   
+
+    <div class = "book_bg">
+    <div class="cons-book" id = "book-holder">    
+        <input type="checkbox" id="checkbox-cover">
+        <input type="checkbox" id="checkbox-page1">
+        <input type="checkbox" id="checkbox-page2">
+        <input type="checkbox" id="checkbox-page3">
+
+        <div class="book">
+
+            <div class="cover">
+                <label for="checkbox-cover"></label>
+            </div>
+
+            <div class="page" id="page1">
+                <div class="front-page">
+                 
+                    <div class = "Index-pg">
+                
+                        <h1>Contents</h1>
+                
+                        <p>
+                
+                            Constitution Structure <br/> <br/>
+                
+                            List of Parts, Articles and Schedules <br/>
+                
+                        </p>
+                
+                    </div>
+                    <label class="next-index" for="checkbox-page1"><i class="fas fa-chevron-right fa-2x"></i></label>
+                </div>
+                <div class="back-page back-page-one">
+                    <h1>Constitution <br/> Structure</h1>
+                    <label class="prev prev-one" for="checkbox-page1"><i class="fas fa-chevron-left fa-2x"></i></label>
+                </div>
+            </div>
+            <div class="page" id="page2">
+                <div class="front-page">
+                    <p class = "cons-str">
+
+                        The Constitution of India is the highest law in the country. It sets the rules for how the government works and explains the rights and responsibilities of citizens. Here’s a simple breakdown of its structure:
+                        
+                        <br/> <br/>
+                        
+                        <strong>Preamble:</strong> Introduction that describes India as a free, fair, and equal nation.<br/><br/>
+                        <strong>Parts:</strong> Sections that explain how the country is run and what rights people have.<br/><br/>
+                        <strong>Schedules:</strong> Lists of things like state names and official languages.<br/><br/>
+                        <strong>Amendments:</strong> Changes that can be made to the Constitution.<br/> <br/>
+                        <strong>Separation of Powers:</strong> Divides government power between lawmakers, enforcers, and judges.<br/><br/>
+                        
+                        <a href="cons-str.html">Read More ...</a>
+    
+                    </p>
+                    <label class="next" for="checkbox-page2"><i class="fas fa-chevron-right fa-2x"></i></label>
+                </div>
+                <div class="back-page back-page-two">
+                    <h1>List of<br/> Parts, Articles <br/>and<br/> Schedules</h1>
+                    <label class="prev prev-two" for="checkbox-page2"><i class="fas fa-chevron-left fa-2x"></i></label>
+                </div>
+            </div>
+            <div class="page" id="page3">
+                <div class="front-page">
+                    <p class = "p-a-s">
+
+                        <strong>Parts of the Constitution:</strong><br/>
+                        The Constitution is divided into <strong>22 parts</strong>, and each part deals with different areas of governance:<br/>
+    
+                        <strong>·</strong> Part I: Union and its Territory (Articles 1 to 4) – Defines the boundaries and territories of India.<br/>
+                        <strong>·</strong> Part II: Citizenship (Articles 5 to 11) – Rules about who can be a citizen of India.<br/> <br/>               
+                            
+                        <strong> Articles of the Constitution:</strong><br/>
+                        There are <strong>395 Articles</strong> in the Constitution, and they cover everything from the organization of the government to the rights of citizens. Each Part of the Constitution contains various Articles that explain different rules and principles. <br/> <br/>
+        
+                        <strong> Schedules of the Constitution:</strong><br/>
+                        The <strong>12 Schedules</strong> contain lists that deal with specific things. Here’s what each one includes:<br/>
+    
+                        <strong>·</strong> Schedule I: List of states and union territories.<br/>
+                        <strong>·</strong> Schedule II: Salaries of top government officials like the President, Governors, Judges, etc.<br/><br/>
+                        
+                        <a href="#">Read More ...</a>  
+    
+                    </p>
+                    <!-- Close Book Button -->
+                    <button id="closeBookBtn" class="close-book-btn">Close</button>
+                </div>
+            </div>
+            <div class="back-cover"></div>
+        </div>
+    </div>
+    </div>
+
+    <footer>
+        <div class="footer-main">
+
+            <div class="upper">
+
+                <div class="logoholder" style="margin-top: 1%;">
+                    <img src="Assets/Images/Cropped Emblem.png" width="100px">
+                </div>
+
+                <div class="implink">
+                    <div>
+                        <p>Our Constitution</p>
+                        <ul>
+                            <li> <a href="our-constitution.html#Constitution">What is Constitution </a> </li>
+                            
+                        </ul>
+                    </div>
+
+                    <div>
+                        <p>Games</p>
+                        <ul>
+                            <li> <a href="games.html#Spin-The-Wheel">Wheel of knowledge </a> </li>    
+                        </ul>
+                    </div>
+
+                    <div>
+                        <p>About-us</p>
+                        <ul>
+                            <li> <a href="about-us.html">Introduction </a> </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="contact-us">
+
+                    <div>
+                        <p> Contact Us :</p>
+                        <ul>
+                            <li><i class="fa fa-envelope-o fa-lg"></i></li>
+                            <li><i class="fa fa-phone "></i></li>
+                        </ul>
+                    </div>
+
+                            <hr style="border: 1.5px solid orange;" width="100%">
+
+                    <div>
+                        <p> Social Media :</p>
+                        <ul>
+                            <li><i class="fa-brands fa-facebook fa-lg"></i></li>
+                            <li><i class="fa-brands fa-instagram fa-lg"></i></li>
+                            <li><i class="fa-brands fa-twitter fa-lg"></i></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="lower">
+
+                <div class="rights">
+                    <p><strong>All Rights Reserved. Powered by Code Hex</strong></p>
+                </div>
+
+                <div class="govtweb">
+
+                    <a href="https://www.nic.in/" target="_blank" rel="noopener noreferrer"><img src="Assets/Images/NIC.png" width="130px" ></a>
+
+                    <a href="https://www.digitalindia.gov.in/" target="_blank" rel="noopener noreferrer"><img src="Assets/Images/DI.png" width="124px" ></a>
+                    
+                </div>
+
+                <div>
+                    <p><strong>Copyright © 2024</strong></p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById('closeBookBtn').addEventListener('click', function() {
+            // Uncheck all the checkboxes to close the book
+            document.getElementById('checkbox-cover').checked = false;
+            document.getElementById('checkbox-page1').checked = false;
+            document.getElementById('checkbox-page2').checked = false;
+            document.getElementById('checkbox-page3').checked = false;
+        });
+    </script>
+</body>
+</html>
