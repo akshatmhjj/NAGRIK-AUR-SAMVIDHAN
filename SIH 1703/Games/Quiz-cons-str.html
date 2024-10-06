@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitution Quiz</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #e9e090;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: rgb(255, 255, 255);
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.392);border-radius: 10px;
+            margin-top: 12%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 32px;
+        }
+
+        .question {
+            margin-bottom: 40px;
+        }
+        .options button {
+            display: block;
+            width: 90%;
+            margin: 10px auto ;
+            padding: 10px;
+            background-color: #163f6d;
+            border-radius: 3px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .options button:hover {
+            background-color: #207e8e;
+        }
+        .feedback {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #endButton {
+            display: none;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #207e8e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        #back-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #f9c74f;
+  border: none;
+  color: #1d3557;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#back-btn:hover {
+  background-color: #f08c00; /* Darker yellow on hover */
+  color: #fff;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Constitution Quiz</h1>
+    <div id="quiz"></div>
+    <div class="feedback" id="feedback"></div>
+    <button id="endButton" class="end_button" onclick="window.history.back();">End Quiz</button>
+</div>
+
+<button id="back-btn" onclick="window.history.back();">Back</button>
+
+<script>
+    const questions = [
+        {
+            question: "What is the main purpose of the Preamble in a constitution?",
+            options: [
+                "To establish the rights of the judiciary",
+                "To introduce the purpose, guiding principles, and core values",
+                "To outline the amendment process",
+                "To define the national budget system"
+            ],
+            correctAnswer: 1
+        },
+        {
+            question: "Which of the following is not typically listed under Fundamental Rights?",
+            options: [
+                "Freedom of Speech",
+                "Right to Privacy",
+                "Right to Vote",
+                "Right to Budgeting"
+            ],
+            correctAnswer: 3
+        },
+        {
+            question: "What does the Legislative Branch do according to Article III?",
+            options: [
+                "Enforces laws",
+                "Defines the country's boundaries",
+                "Describes the law-making body and its processes",
+                "Ensures public funds are audited"
+            ],
+            correctAnswer: 2
+        },
+        {
+            question: "What is outlined in Article VII of the constitution?",
+            options: [
+                "The election process and political parties",
+                "The rights and freedoms of citizens",
+                "The amendment process for making changes to the constitution",
+                "The structure of the judicial system"
+            ],
+            correctAnswer: 2
+        },
+        {
+            question: "What is described in the Supremacy of the Constitution (Article VIII)?",
+            options: [
+                "The constitution is the highest law of the land",
+                "Political parties’ regulations",
+                "Autonomy of regional governments",
+                "Process of electing members of the executive"
+            ],
+            correctAnswer: 0
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        const quiz = document.getElementById('quiz');
+        const feedback = document.getElementById('feedback');
+        feedback.innerHTML = ""; // Clear feedback on each new question
+        if (currentQuestionIndex < questions.length) {
+            const q = questions[currentQuestionIndex];
+            quiz.innerHTML = `
+                <div class="question"><strong>Q${currentQuestionIndex + 1}:</strong> ${q.question}</div>
+                <div class="options">
+                    ${q.options.map((option, index) => 
+                        `<button onclick="checkAnswer(${index})">${option}</button>`
+                    ).join('')}
+                </div>
+            `;
+        } else {
+            quiz.innerHTML = `<h2>Quiz Completed! Your Score: ${score} / ${questions.length}</h2>`;
+            document.getElementById('endButton').style.display = 'block';
+        }
+    }
+
+    function checkAnswer(selected) {
+        const q = questions[currentQuestionIndex];
+        const feedback = document.getElementById('feedback');
+        if (selected === q.correctAnswer) {
+            feedback.innerHTML = `<p style="color: green;">Correct!</p>`;
+            score++;
+        } else {
+            feedback.innerHTML = `<p style="color: red;">Incorrect. The correct answer is "${q.options[q.correctAnswer]}".</p>`;
+        }
+        // Move to the next question after 2-3 seconds, regardless of correctness
+        setTimeout(() => {
+            currentQuestionIndex++;
+            loadQuestion();
+        }, 2500); // Delay of 2.5 seconds before moving to the next question
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+
+    window.onload = loadQuestion;
+</script>
+
+</body>
+</html>

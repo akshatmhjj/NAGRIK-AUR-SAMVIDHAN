@@ -1,0 +1,303 @@
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spin Wheel App</title>
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Chart JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- Chart JS Plugin for displaying text over chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://kit.fontawesome.com/ae284f5a17.js" crossorigin="anonymous"></script>
+    <!-- Stylesheet -->
+    <style>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f, #2c2c2c); /* Dark gradient background */
+}
+.wrapper {
+  width: 90%;
+  max-width: 34.37em;
+  max-height: 90vh;
+  background-color: #1f1f1f; /* Dark wrapper */
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  padding: 3em;
+  border-radius: 1em;
+  box-shadow: 0 4em 5em rgba(0, 0, 0, 0.8); /* Darker shadow */
+}
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#wheel {
+  max-height: inherit;
+  width: inherit;
+  top: 0;
+  padding: 0;
+}
+#spin-btn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  height: 26%;
+  width: 26%;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0;
+  background: radial-gradient(#ffd700 50%, #ff6347 85%); /* Gold to Orange gradient */
+  color: #ff6347;
+  text-transform: uppercase;
+  font-size: 1.8em;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+i {
+  position: absolute;
+  width: 4em;
+  top: 40%;
+  right: -65%;
+  color: #ffffff; /* Matching icon color */
+}
+#final-value {
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 1.5em;
+  color: #eaeaea; /* Light gray text */
+  font-weight: 500;
+}
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2c2c2c; /* Darker popup background */
+  border-radius: 15px;
+  padding: 50px;
+  width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: 500;
+  color: #ffd700; /* Gold text */
+}
+#popup-close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 2em;
+  cursor: pointer;
+  color: #ff6347; /* Orange close button */
+}
+#popup-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #ffd700; /* Gold title */
+}
+@media screen and (max-width: 768px) {
+  .wrapper {
+    font-size: 12px;
+  }
+  img {
+    right: -5%;
+  }
+}
+
+#back-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #f9c74f;
+  border: none;
+  color: #1d3557;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#back-btn:hover {
+  background-color: #f08c00; /* Darker yellow on hover */
+  color: #fff;
+}
+
+
+
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <canvas id="wheel"></canvas>
+        <button id="spin-btn">Spin</button>
+        <i class="fa fa-caret-left fa-5x" aria-hidden="true"></i>
+      </div>
+      <div id="final-value">
+        <p>Click On The Spin Button To Start</p>
+      </div>
+    </div>
+
+    <div id="popup">
+      <span id="popup-close">&times;</span>
+      <p id="popup-title"></p>
+      <p id="popup-text"></p>
+    </div>
+
+    <button id="back-btn">← Back</button>
+
+
+    <!-- Script -->
+    <script>
+      const wheel = document.getElementById("wheel");
+      const spinBtn = document.getElementById("spin-btn");
+      const finalValue = document.getElementById("final-value");
+      const popup = document.getElementById("popup");
+      const popupTitle = document.getElementById("popup-title");
+      const popupText = document.getElementById("popup-text");
+      const popupClose = document.getElementById("popup-close");
+
+      // Definitions for each section
+      const definitions = {
+        RIGHTS: "Rights granted by the Constitution to protect liberty and equality.",
+        DUTIES: "Moral and legal obligations of citizens to the country.",
+        PREAMBLE: "Introductory statement of the Constitution outlining its purpose.",
+        PARLIAMENT: "Discusses the roles, powers, and responsibilities of the Parliament, including the Lok Sabha and Rajya Sabha.",
+        AMENDMENTS: "The process for making changes to the Constitution, ensuring that it evolves with societal needs while preserving its core principles.",
+        JUDICIARY: "The system of courts that interprets and applies the law."
+      };
+
+      // Object that stores values of minimum and maximum angle for a value
+      const rotationValues = [
+        { minDegree: 0, maxDegree: 30, value: "DUTIES" },
+        { minDegree: 31, maxDegree: 90, value: "RIGHTS" },
+        { minDegree: 91, maxDegree: 150, value: "JUDICIARY" },
+        { minDegree: 151, maxDegree: 210, value: "AMENDMENTS" },
+        { minDegree: 211, maxDegree: 270, value: "PARLIAMENT" },
+        { minDegree: 271, maxDegree: 330, value: "PREAMBLE" },
+        { minDegree: 331, maxDegree: 360, value: "DUTIES" }
+      ];
+
+      // Size of each piece
+      const data = [16, 16, 16, 16, 16, 16];
+    // Background color for each piece in dark theme
+        var pieColors = [
+        "#9b59b6", // Purple
+        "#e74c3c", // Red
+        "#3498db", // Blue
+        "#2ecc71", // Green
+        "#f1c40f", // Yellow
+        "#e67e22"  // Orange
+        ];
+
+
+      // Create chart
+      let myChart = new Chart(wheel, {
+        // Plugin for displaying text on pie chart
+        plugins: [ChartDataLabels],
+        // Chart Type Pie
+        type: "pie",
+        data: {
+          // Labels
+          labels: ["RIGHTS", "DUTIES", "PREAMBLE", "PARLIAMENT", "AMENDMENTS", "JUDICIARY"],
+          // Settings for dataset/pie
+          datasets: [
+            {
+              backgroundColor: pieColors,
+              data: data
+            }
+          ]
+        },
+        options: {
+          // Responsive chart
+          responsive: true,
+          animation: { duration: 0 },
+          plugins: {
+            // Hide tooltip and legend
+            tooltip: false,
+            legend: {
+              display: false
+            },
+            // Display labels inside pie chart
+            datalabels: {
+              color: "#ffffff",
+              formatter: (_, context) => context.chart.data.labels[context.dataIndex],
+              font: { size: 14 }
+            }
+          }
+        }
+      });
+
+      // Display value and pop-up based on the random angle
+      const valueGenerator = (angleValue) => {
+        for (let i of rotationValues) {
+          if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
+            popupTitle.innerHTML = i.value;
+            popupText.innerHTML = definitions[i.value];
+            popup.style.display = "block";
+            spinBtn.disabled = true;
+            break;
+          }
+        }
+      };
+
+      // Spinner count
+      let count = 0;
+      // 100 rotations for animation and last rotation for result
+      let resultValue = 101;
+
+      // Start spinning
+      spinBtn.addEventListener("click", () => {
+        spinBtn.disabled = true;
+        // Empty final value
+        finalValue.innerHTML = `<p>Good Luck!</p>`;
+        // Generate random degrees to stop at
+        let randomDegree = Math.floor(Math.random() * (355 - 0 + 1) + 0);
+        // Interval for rotation animation
+        let rotationInterval = window.setInterval(() => {
+          // Set rotation for piechart
+          myChart.options.rotation = myChart.options.rotation + resultValue;
+          // Update chart with new value;
+          myChart.update();
+          // If rotation > 360 reset it back to 0
+          if (myChart.options.rotation >= 360) {
+            count += 1;
+            resultValue -= 5;
+            myChart.options.rotation = 0;
+          } else if (count > 15 && myChart.options.rotation == randomDegree) {
+            valueGenerator(randomDegree);
+            clearInterval(rotationInterval);
+            count = 0;
+            resultValue = 101;
+          }
+        }, 10);
+      });
+
+      // Close pop-up and reset
+      popupClose.addEventListener("click", () => {
+        popup.style.display = "none";
+        spinBtn.disabled = false;
+      });
+
+      const backBtn = document.getElementById("back-btn");
+  backBtn.addEventListener("click", () => {
+    window.history.back();
+  });
+    </script>
+  </body>
+</html>
